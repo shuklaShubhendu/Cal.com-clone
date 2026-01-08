@@ -47,7 +47,12 @@ export default function EventTypesPage() {
         try {
             const res = await fetch(`${API_URL}/api/event-types`);
             const data = await res.json();
-            setEventTypes(data);
+            if (Array.isArray(data)) {
+                setEventTypes(data);
+            } else {
+                console.error('Invalid event types data:', data);
+                setEventTypes([]);
+            }
         } catch (error) {
             console.error('Error fetching event types:', error);
         } finally {
